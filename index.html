@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<meta name="description" content="Luận chứng trực quan về sự cần thiết thực hiện Đề án Xây dựng, phát triển hệ sinh thái du lịch thông minh tỉnh Thanh Hóa, giai đoạn 2026–2030."/>
+<title>Thanh Hóa Smart Tourism 2026–2030 — Luận chứng sự cần thiết</title>
+<style>
+:root{
+  --ink:#10233f;
+  --muted:#60718a;
+  --bg:#f5f8fc;
+  --card:#ffffff;
+  --line:#dce6f0;
+  --cyan:#0dc6df;
+  --blue:#1877f2;
+  --navy:#0b2d4f;
+  --teal:#0f9f8f;
+  --amber:#f5a524;
+  --red:#d95c5c;
+  --green:#3aa76d;
+  --shadow:0 18px 50px rgba(15, 46, 78,.10);
+  --radius:24px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  font-family:Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  color:var(--ink);
+  background:var(--bg);
+  line-height:1.62;
+}
+a{color:inherit}
+img{max-width:100%;display:block}
+.container{width:min(1180px,92vw);margin:auto}
+.kicker{
+  font-size:.78rem;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  font-weight:800;
+  color:var(--blue);
+}
+h1,h2,h3,h4{line-height:1.18;margin:0 0 .75rem}
+h1{font-size:clamp(2.7rem,6vw,5.8rem);letter-spacing:-.045em}
+h2{font-size:clamp(2rem,3.4vw,3.3rem);letter-spacing:-.03em}
+h3{font-size:1.35rem}
+p{margin:.55rem 0 1rem}
+.small{font-size:.88rem;color:var(--muted)}
+.muted{color:var(--muted)}
+strong{font-weight:800}
+.topbar{
+  position:sticky;top:0;z-index:50;
+  backdrop-filter:blur(16px);
+  background:rgba(245,248,252,.88);
+  border-bottom:1px solid rgba(220,230,240,.8);
+}
+.nav{
+  min-height:64px;display:flex;align-items:center;gap:18px;
+}
+.brand{font-weight:900;letter-spacing:-.03em;margin-right:auto}
+.brand span{color:var(--blue)}
+.nav a{
+  text-decoration:none;font-size:.86rem;font-weight:700;color:#52657e;
+  padding:.5rem .7rem;border-radius:999px;
+}
+.nav a:hover{background:#eaf2fb;color:var(--ink)}
+.hero{
+  min-height:92vh;display:grid;align-items:end;position:relative;overflow:hidden;
+  background:
+    linear-gradient(90deg,rgba(4,25,49,.90) 0%,rgba(4,25,49,.72) 48%,rgba(4,25,49,.20) 78%),
+    url("https://upload.wikimedia.org/wikipedia/commons/4/4a/Sam_Son_beach.jpg") center/cover no-repeat;
+  color:white;
+}
+.hero::after{
+  content:"";position:absolute;inset:auto 0 0;height:190px;
+  background:linear-gradient(transparent,rgba(5,22,42,.55));
+}
+.hero .container{position:relative;z-index:2;padding:9rem 0 5rem}
+.hero-copy{max-width:850px}
+.hero .kicker{color:#83ecfa}
+.hero p{font-size:clamp(1.04rem,1.6vw,1.28rem);color:#dceaf8;max-width:760px}
+.hero-badges{display:flex;flex-wrap:wrap;gap:10px;margin-top:26px}
+.badge{
+  border:1px solid rgba(255,255,255,.22);
+  background:rgba(255,255,255,.10);
+  padding:.55rem .8rem;border-radius:999px;font-size:.8rem;font-weight:800;
+}
+section{padding:86px 0}
+.section-head{max-width:840px;margin-bottom:34px}
+.grid{display:grid;gap:20px}
+.grid-4{grid-template-columns:repeat(4,1fr)}
+.grid-3{grid-template-columns:repeat(3,1fr)}
+.grid-2{grid-template-columns:repeat(2,1fr)}
+.card{
+  background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+  padding:28px;box-shadow:var(--shadow);
+}
+.stat{
+  min-height:190px;display:flex;flex-direction:column;justify-content:space-between;
+  background:linear-gradient(145deg,#fff,#f3f8fd);
+}
+.stat .number{font-size:clamp(2.2rem,4vw,4rem);font-weight:950;letter-spacing:-.05em}
+.stat .unit{font-size:.92rem;color:var(--muted)}
+.stat .delta{font-weight:800;color:var(--blue)}
+.band{background:#071f38;color:white}
+.band .muted{color:#b9cadb}
+.gap-wrap{
+  display:grid;grid-template-columns:1.2fr .8fr;gap:24px;align-items:stretch;
+}
+.chart-card{padding:34px}
+.bar-row{display:grid;grid-template-columns:160px 1fr 78px;gap:14px;align-items:center;margin:18px 0}
+.bar-track{height:16px;border-radius:999px;background:#e7eef6;overflow:hidden}
+.bar-fill{height:100%;border-radius:999px;background:linear-gradient(90deg,var(--blue),var(--cyan))}
+.bar-fill.secondary{background:linear-gradient(90deg,#6c7ed9,#b061ff)}
+.bar-fill.green{background:linear-gradient(90deg,var(--teal),#55d89c)}
+.legend{display:flex;gap:18px;flex-wrap:wrap;font-size:.82rem;color:var(--muted);margin-top:16px}
+.legend span::before{content:"";display:inline-block;width:10px;height:10px;border-radius:50%;background:var(--blue);margin-right:6px}
+.legend span:nth-child(2)::before{background:#8f6be8}
+.note{
+  border-left:4px solid var(--cyan);padding:14px 16px;background:#eefbfd;border-radius:0 14px 14px 0;
+  color:#31506b;font-size:.9rem;
+}
+.problem{
+  position:relative;overflow:hidden;
+}
+.problem .idx{
+  position:absolute;right:18px;top:14px;font-size:3.2rem;font-weight:950;color:#e9f1f8;line-height:1;
+}
+.problem h3{padding-right:42px}
+.problem .evidence{font-size:.9rem;color:#496079;margin-top:14px}
+.problem .evidence b{color:var(--ink)}
+.photo-grid{
+  display:grid;grid-template-columns:1.25fr .75fr .75fr;grid-template-rows:260px 260px;gap:14px
+}
+.photo{
+  position:relative;border-radius:22px;overflow:hidden;background:#dfeaf4;
+}
+.photo img{width:100%;height:100%;object-fit:cover}
+.photo:first-child{grid-row:1/3}
+.photo:nth-child(4){grid-column:2/4}
+.photo::after{content:"";position:absolute;inset:45% 0 0;background:linear-gradient(transparent,rgba(0,0,0,.65))}
+.photo span{position:absolute;left:18px;bottom:14px;color:white;font-weight:900;z-index:2}
+.photo small{display:block;font-weight:600;color:#dbe9f6}
+.season-grid{display:grid;grid-template-columns:.85fr 1.15fr;gap:24px}
+.donut{
+  width:240px;height:240px;border-radius:50%;margin:15px auto 22px;
+  background:conic-gradient(var(--blue) 0 16.4%, var(--cyan) 16.4% 64.5%, #8d6ce4 64.5% 94.3%, #cfd8e4 94.3% 100%);
+  position:relative;
+}
+.donut::after{content:"";position:absolute;inset:34px;border-radius:50%;background:white}
+.donut-label{position:absolute;inset:0;z-index:2;display:grid;place-items:center;text-align:center;font-weight:900}
+.donut-label span{font-size:2rem;display:block;line-height:1}
+.dest-bars .bar-row{grid-template-columns:130px 1fr 70px}
+.dest-bars .bar-track{height:20px}
+.dest-bars .samson{background:linear-gradient(90deg,var(--blue),var(--cyan))}
+.dest-bars .puluong{background:linear-gradient(90deg,#4b9b6e,#78d49d)}
+.dest-bars .heritage{background:linear-gradient(90deg,#a67c52,#d8b07d)}
+.digital-map{
+  background:linear-gradient(145deg,#061e36,#0d355e);color:white;border-radius:30px;padding:34px;
+  box-shadow:var(--shadow)
+}
+.digital-grid{
+  display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-top:28px
+}
+.digital-node{
+  border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.07);
+  border-radius:18px;padding:18px;min-height:150px
+}
+.digital-node b{display:block;font-size:1rem;margin-bottom:7px}
+.digital-node small{color:#c5d9eb}
+.flow{
+  display:grid;grid-template-columns:repeat(7,1fr);gap:10px;align-items:stretch
+}
+.flow-step{
+  background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px 14px;min-height:165px;position:relative
+}
+.flow-step:not(:last-child)::after{
+  content:"→";position:absolute;right:-12px;top:50%;transform:translateY(-50%);
+  color:var(--blue);font-weight:950;font-size:1.3rem;z-index:2
+}
+.flow-step .icon{font-size:1.45rem;margin-bottom:12px}
+.flow-step b{display:block;margin-bottom:7px}
+.flow-step small{color:var(--muted)}
+.mapping{overflow:auto;border-radius:22px;border:1px solid var(--line);background:white}
+table{border-collapse:collapse;width:100%;min-width:860px}
+th,td{padding:18px 20px;text-align:left;vertical-align:top;border-bottom:1px solid var(--line)}
+th{background:#edf5fc;font-size:.82rem;text-transform:uppercase;letter-spacing:.06em}
+td{font-size:.92rem}
+tr:last-child td{border-bottom:none}
+.benchmark{
+  border-left:5px solid var(--blue)
+}
+.benchmark .tag{display:inline-block;background:#edf5ff;color:#1b64b7;border-radius:999px;padding:.35rem .55rem;font-size:.72rem;font-weight:850}
+.benefit{
+  min-height:240px;
+}
+.benefit .who{font-size:.78rem;text-transform:uppercase;letter-spacing:.12em;color:var(--blue);font-weight:850}
+.scenario{
+  background:linear-gradient(145deg,#fff9ed,#fff);
+  border:1px solid #f3dfb5;
+}
+.scenario .number{font-size:2rem;font-weight:950;color:#a86400}
+.coi{
+  display:grid;grid-template-columns:repeat(5,1fr);gap:12px;align-items:stretch
+}
+.coi-step{
+  padding:20px;border-radius:18px;background:#fff;border:1px solid #e5d7d7;position:relative
+}
+.coi-step:not(:last-child)::after{
+  content:"→";position:absolute;right:-12px;top:50%;transform:translateY(-50%);font-weight:950;color:var(--red)
+}
+.coi-step b{display:block;margin-bottom:8px}
+.closing{
+  background:
+    linear-gradient(90deg,rgba(5,30,50,.93),rgba(5,30,50,.82)),
+    url("https://upload.wikimedia.org/wikipedia/commons/0/06/Ho_dynasty%27s_citadel%2C_Vietnam.jpg") center/cover no-repeat;
+  color:white;border-radius:34px;padding:52px
+}
+.closing p{color:#d2e3f2;max-width:900px}
+.refs details{
+  background:white;border:1px solid var(--line);border-radius:18px;margin:10px 0;padding:16px 18px
+}
+.refs summary{cursor:pointer;font-weight:850}
+.refs ol{padding-left:1.3rem}
+.refs li{margin:.8rem 0;color:#4b5f78;font-size:.9rem}
+.refs a{color:#1b65b9}
+.license{
+  background:#eef3f8;border-radius:18px;padding:18px;font-size:.82rem;color:#52657c
+}
+.source-pill{
+  display:inline-block;background:#eff5fb;border:1px solid #dce7f1;padding:.22rem .48rem;border-radius:999px;font-size:.72rem;color:#496079;margin:.15rem .2rem .15rem 0
+}
+.scrolltop{
+  position:fixed;right:20px;bottom:20px;width:46px;height:46px;border-radius:50%;border:none;background:var(--ink);color:white;
+  font-weight:900;cursor:pointer;box-shadow:var(--shadow);display:none;z-index:50
+}
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .6s ease,transform .6s ease}
+.reveal.show{opacity:1;transform:none}
+@media(max-width:980px){
+  .grid-4{grid-template-columns:repeat(2,1fr)}
+  .grid-3{grid-template-columns:1fr 1fr}
+  .gap-wrap,.season-grid{grid-template-columns:1fr}
+  .digital-grid{grid-template-columns:1fr 1fr}
+  .flow{grid-template-columns:1fr 1fr}
+  .flow-step::after,.coi-step::after{display:none!important}
+  .coi{grid-template-columns:1fr 1fr}
+  .photo-grid{grid-template-columns:1fr 1fr;grid-template-rows:220px 220px}
+  .photo:first-child{grid-row:auto}
+  .photo:nth-child(4){grid-column:auto}
+}
+@media(max-width:680px){
+  .nav a{display:none}
+  .grid-4,.grid-3,.grid-2,.digital-grid,.flow,.coi{grid-template-columns:1fr}
+  .hero{min-height:82vh}
+  .hero .container{padding:7rem 0 3rem}
+  .bar-row,.dest-bars .bar-row{grid-template-columns:100px 1fr 60px}
+  .photo-grid{grid-template-columns:1fr;grid-template-rows:repeat(4,210px)}
+  .closing{padding:30px 24px}
+}
+@media print{
+  .topbar,.scrolltop{display:none!important}
+  body{background:white}
+  .card,.digital-map,.closing{box-shadow:none}
+  section{padding:36px 0}
+  .reveal{opacity:1!important;transform:none!important}
+}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <div class="container nav">
+    <div class="brand">THANH HÓA <span>SMART TOURISM</span></div>
+    <a href="#gap">Khoảng cách 2030</a>
+    <a href="#bottlenecks">Điểm nghẽn</a>
+    <a href="#ecosystem">Hệ sinh thái</a>
+    <a href="#benefits">Lợi ích</a>
+    <a href="#references">Nguồn</a>
+  </div>
+</div>
+
+<header class="hero">
+  <div class="container">
+    <div class="hero-copy">
+      <div class="kicker">Luận chứng trực quan • Giai đoạn 2026–2030</div>
+      <h1>Vì sao Thanh Hóa cần thực hiện Đề án hệ sinh thái du lịch thông minh?</h1>
+      <p>Du lịch Thanh Hóa đã đạt quy mô lớn. Bài toán giai đoạn tới không chỉ là tiếp tục tăng lượt khách, mà là tăng giá trị trên mỗi chuyến đi, phân bổ dòng khách hợp lý hơn, nâng chất lượng dịch vụ và biến các nền tảng số hiện có thành một hệ thống dữ liệu – điều hành – dịch vụ có khả năng liên thông.</p>
+      <div class="hero-badges">
+        <span class="badge">16,28 triệu lượt khách năm 2025</span>
+        <span class="badge">45.606 tỷ đồng tổng thu năm 2025</span>
+        <span class="badge">Mục tiêu 2030: 21,5 triệu lượt</span>
+        <span class="badge">Mục tiêu 2030: 94.200 tỷ đồng</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section id="gap">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="kicker">01 — Khoảng cách phát triển</div>
+      <h2>Tổng thu phải tăng nhanh hơn nhiều so với lượt khách</h2>
+      <p class="muted">Từ số thực tế 2025 và mục tiêu 2030, lượng khách cần tăng khoảng 32,1%, nhưng tổng thu cần tăng khoảng 106,6%. Điều đó kéo theo yêu cầu tổng thu trên mỗi lượt khách tăng khoảng 56,4% trong 5 năm.</p>
+    </div>
+    <div class="grid grid-4">
+      <div class="card stat reveal">
+        <div><div class="number">16,28</div><div class="unit">triệu lượt khách • 2025</div></div>
+        <div class="delta">→ 21,5 triệu năm 2030</div>
+      </div>
+      <div class="card stat reveal">
+        <div><div class="number">45.606</div><div class="unit">tỷ đồng tổng thu • 2025</div></div>
+        <div class="delta">→ 94.200 tỷ đồng năm 2030</div>
+      </div>
+      <div class="card stat reveal">
+        <div><div class="number">+32,1%</div><div class="unit">mức tăng lượt khách cần đạt</div></div>
+        <div class="small">CAGR xấp xỉ 5,72%/năm</div>
+      </div>
+      <div class="card stat reveal">
+        <div><div class="number">+56,4%</div><div class="unit">mức tăng tổng thu/lượt cần đạt</div></div>
+        <div class="small">CAGR xấp xỉ 9,36%/năm</div>
+      </div>
+    </div>
+    <div class="gap-wrap" style="margin-top:24px">
+      <div class="card chart-card reveal">
+        <h3>Chỉ số 2025 = 100</h3>
+        <div class="bar-row"><span>Lượt khách</span><div class="bar-track"><div class="bar-fill" style="width:64%"></div></div><b>132,1</b></div>
+        <div class="bar-row"><span>Tổng thu</span><div class="bar-track"><div class="bar-fill secondary" style="width:100%"></div></div><b>206,6</b></div>
+        <div class="bar-row"><span>Tổng thu/lượt</span><div class="bar-track"><div class="bar-fill green" style="width:76%"></div></div><b>156,4</b></div>
+        <div class="note">Đây là phép tính phân tích từ số liệu thực tế và mục tiêu; không phải khảo sát chi tiêu bình quân và không phải dự báo tác động riêng của Đề án.</div>
+      </div>
+      <div class="card reveal">
+        <div class="kicker">Hàm ý chính</div>
+        <h3>Tăng khách đơn thuần không đủ</h3>
+        <p>Để đạt mục tiêu 2030, Thanh Hóa cần tăng mức sử dụng dịch vụ, kéo dài và làm phong phú hành trình, mở rộng không gian chi tiêu và cải thiện hiệu quả kết nối giữa điểm đến, doanh nghiệp, sản phẩm địa phương và du khách.</p>
+        <span class="source-pill">Cục Du lịch Quốc gia Việt Nam (2025a)</span>
+        <span class="source-pill">Đảng bộ tỉnh Thanh Hóa (2025)</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="kicker" style="color:#79e8f7">02 — Lưu trú & chi tiêu</div>
+      <h2>Khách qua đêm tạo dư địa chi tiêu lớn hơn</h2>
+      <p class="muted">Dữ liệu kỳ nghỉ 30/4–1/5/2024 cho thấy mức chi theo ngày của khách lưu trú qua đêm cao hơn đáng kể so với khách tham quan trong ngày. Dữ liệu này chỉ phản ánh một kỳ nghỉ cụ thể, nhưng cho thấy vì sao thời gian lưu trú là một biến số kinh tế cần theo dõi.</p>
+    </div>
+    <div class="grid grid-3">
+      <div class="card" style="background:#0d3257;border-color:#1f4d78;color:white">
+        <div class="number" style="font-size:3rem;font-weight:950">1,73 triệu</div>
+        <div class="muted">đồng/người/ngày • khách lưu trú qua đêm</div>
+      </div>
+      <div class="card" style="background:#0d3257;border-color:#1f4d78;color:white">
+        <div class="number" style="font-size:3rem;font-weight:950">0,55 triệu</div>
+        <div class="muted">đồng/người • khách tham quan trong ngày</div>
+      </div>
+      <div class="card" style="background:#0d3257;border-color:#1f4d78;color:white">
+        <div class="number" style="font-size:3rem;font-weight:950;color:#76edf7">≈3,15×</div>
+        <div class="muted">chênh lệch mức chi theo ngày trong cùng kỳ quan sát</div>
+      </div>
+    </div>
+    <p class="small" style="color:#b8cada;margin-top:16px">Nguồn: số liệu Sở Văn hóa, Thể thao và Du lịch Thanh Hóa được Báo Văn Hóa dẫn lại (2024). Không ngoại suy thành mức chi bình quân năm.</p>
+  </div>
+</section>
+
+<section id="bottlenecks">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="kicker">03 — Sáu điểm nghẽn cần giải quyết</div>
+      <h2>Đề án có cơ sở từ các vấn đề cụ thể của du lịch Thanh Hóa</h2>
+    </div>
+    <div class="grid grid-3">
+      <article class="card problem reveal"><div class="idx">01</div><h3>Giá trị chuyến đi còn cần cải thiện</h3><p>Khoảng cách giữa tốc độ tăng lượt khách và tổng thu đến 2030 đặt ra yêu cầu nâng giá trị trên mỗi chuyến đi.</p><div class="evidence"><b>Bằng chứng:</b> mục tiêu tổng thu 2030 tăng hơn gấp đôi 2025; dữ liệu kỳ nghỉ cho thấy khác biệt lớn giữa khách qua đêm và khách trong ngày.</div></article>
+      <article class="card problem reveal"><div class="idx">02</div><h3>Mùa vụ và tập trung không gian cao</h3><p>Du lịch biển và quý II–III chiếm tỷ trọng lớn; Sầm Sơn vượt xa nhiều điểm di sản và sinh thái trong cùng kỳ cao điểm.</p><div class="evidence"><b>Bằng chứng:</b> biển chiếm 68,7% lượt khách năm 2025; Q2–Q3 khoảng 77,9% lượt khách.</div></article>
+      <article class="card problem reveal"><div class="idx">03</div><h3>Tài nguyên lớn nhưng liên kết giá trị chưa tương xứng</h3><p>Thanh Hóa có nguồn di sản và sản phẩm địa phương lớn, nhưng việc kết nối chúng với hành trình, trải nghiệm và mua sắm còn chưa đồng đều.</p><div class="evidence"><b>Bằng chứng:</b> 858 di tích được xếp hạng; gần 700 sản phẩm OCOP.</div></article>
+      <article class="card problem reveal"><div class="idx">04</div><h3>Nguồn cung phân tán, năng lực số không đồng đều</h3><p>Mạng lưới cơ sở dịch vụ đa dạng nhưng nhiều đơn vị quy mô nhỏ, với mức sẵn sàng số và năng lực vận hành khác nhau.</p><div class="evidence"><b>Bằng chứng:</b> khoảng 1.450 cơ sở lưu trú; khoảng 60% cơ sở có dưới 80 phòng theo baseline 2023.</div></article>
+      <article class="card problem reveal"><div class="idx">05</div><h3>Dữ liệu và nền tảng cần tiếp tục liên thông</h3><p>Tỉnh đã có IOC, kiến trúc Chính quyền số, app, portal và dữ liệu du lịch; vấn đề hiện nay là làm sạch, chuẩn hóa, kết nối và tái sử dụng.</p><div class="evidence"><b>Bằng chứng:</b> Chỉ thị 10/CT-UBND năm 2026 yêu cầu tiếp tục chuẩn hóa và kết nối dữ liệu lên IOC.</div></article>
+      <article class="card problem reveal"><div class="idx">06</div><h3>Chất lượng dịch vụ và trải nghiệm chưa đồng đều</h3><p>Một số hạn chế về quản lý, chất lượng dịch vụ, giới thiệu tại di tích, chuyển đổi số và phản ánh dịch vụ vẫn tồn tại.</p><div class="evidence"><b>Bằng chứng:</b> Chỉ thị 07/CT-UBND năm 2025; khảo sát 193 khách du lịch nông nghiệp năm 2026.</div></article>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="photo-grid reveal">
+      <div class="photo"><img src="https://upload.wikimedia.org/wikipedia/commons/4/4a/Sam_Son_beach.jpg" alt="Bãi biển Sầm Sơn"/><span>Sầm Sơn<small>Cực du lịch biển lớn của tỉnh</small></span></div>
+      <div class="photo"><img src="https://upload.wikimedia.org/wikipedia/commons/b/b7/Pu_Luong_Thanh_Hoa.jpg" alt="Pù Luông"/><span>Pù Luông<small>Sinh thái & cộng đồng</small></span></div>
+      <div class="photo"><img src="https://upload.wikimedia.org/wikipedia/commons/5/57/Lam_Kinh.jpg" alt="Lam Kinh"/><span>Lam Kinh<small>Di sản lịch sử</small></span></div>
+      <div class="photo"><img src="https://upload.wikimedia.org/wikipedia/commons/0/06/Ho_dynasty%27s_citadel%2C_Vietnam.jpg" alt="Thành Nhà Hồ"/><span>Thành Nhà Hồ<small>Di sản thế giới UNESCO</small></span></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container season-grid">
+    <div class="card reveal">
+      <div class="kicker">Mùa vụ 2025</div>
+      <h3>Quý II–III chiếm phần lớn hoạt động</h3>
+      <div class="donut"><div class="donut-label"><div><span>77,9%</span><small>lượt khách Q2–Q3</small></div></div></div>
+      <p class="small">Tỷ trọng được tính từ các số liệu lũy kế công bố theo từng thời điểm; không phải chuỗi thống kê quý chính thức.</p>
+      <div class="legend"><span>Q1</span><span>Q2</span><span>Q3</span><span style="opacity:.6">Q4</span></div>
+    </div>
+    <div class="card dest-bars reveal">
+      <div class="kicker">Cùng kỳ 30/4–4/5/2025</div>
+      <h3>Chênh lệch quy mô khách giữa các điểm đến</h3>
+      <div class="bar-row"><span>Sầm Sơn</span><div class="bar-track"><div class="bar-fill samson" style="width:100%"></div></div><b>916k</b></div>
+      <div class="bar-row"><span>Pù Luông</span><div class="bar-track"><div class="bar-fill puluong" style="width:7.1%"></div></div><b>65,1k</b></div>
+      <div class="bar-row"><span>Thành Nhà Hồ</span><div class="bar-track"><div class="bar-fill heritage" style="width:2.2%"></div></div><b>15k</b></div>
+      <div class="bar-row"><span>Lam Kinh</span><div class="bar-track"><div class="bar-fill heritage" style="width:1.6%"></div></div><b>10,5k</b></div>
+      <div class="bar-row"><span>Bến En</span><div class="bar-track"><div class="bar-fill puluong" style="width:1.5%"></div></div><b>10k</b></div>
+      <p class="small">Nguồn: Báo Nhân Dân (2025), theo số liệu tổng hợp nhanh của Sở Văn hóa, Thể thao và Du lịch Thanh Hóa. So sánh cùng kỳ, không phải thị phần cả năm.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="kicker">04 — Thanh Hóa không bắt đầu từ số 0</div>
+      <h2>Nền tảng số đã có; bài toán là chuẩn hóa, liên thông và khai thác tốt hơn</h2>
+      <p class="muted">Đề án không nên được hiểu như việc xây lại toàn bộ từ đầu. Thanh Hóa đã có nhiều tài sản số quan trọng; chính vì vậy, yêu cầu trọng tâm là kết nối và tái sử dụng những gì đã có để tránh các hệ thống biệt lập.</p>
+    </div>
+    <div class="digital-map reveal">
+      <div class="kicker" style="color:#77e7f5">Hệ thống hiện hữu</div>
+      <div class="digital-grid">
+        <div class="digital-node"><b>Trung tâm điều hành thông minh</b><small>Chính thức vận hành 20/3/2026; 14 phân hệ, có dữ liệu/lĩnh vực du lịch.</small></div>
+        <div class="digital-node"><b>Kiến trúc Chính quyền số 4.0</b><small>Kho dữ liệu dùng chung, GIS, IoT, báo cáo, hệ thống quản lý du lịch thông minh.</small></div>
+        <div class="digital-node"><b>Smart Travel / AR</b><small>Đã triển khai tại 9 khu, điểm du lịch theo báo cáo năm 2025.</small></div>
+        <div class="digital-node"><b>Cổng & ứng dụng du lịch</b><small>Các kênh số chính thức phục vụ thông tin và một phần hành trình du khách.</small></div>
+        <div class="digital-node"><b>Dữ liệu số hóa</b><small>71 khu, điểm du lịch cùng hồ sơ cơ sở lưu trú, lữ hành và các dữ liệu chuyên ngành.</small></div>
+      </div>
+      <div class="note" style="margin-top:22px;background:rgba(255,255,255,.08);border-left-color:#65ecfa;color:#cde7f7">Chỉ thị 10/CT-UBND ngày 12/7/2026 tiếp tục yêu cầu phân loại, làm sạch, chuẩn hóa và kết nối dữ liệu văn hóa – du lịch với IOC. Điều này cho thấy năng lực liên thông vẫn đang được hoàn thiện.</div>
+    </div>
+  </div>
+</section>
+
+<section id="ecosystem">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="kicker">05 — Bảy nhóm năng lực cần thiết</div>
+      <h2>Không phải bảy gói công nghệ rời rạc, mà là một chuỗi phụ thuộc lẫn nhau</h2>
+    </div>
+    <div class="flow reveal">
+      <div class="flow-step"><div class="icon">📍</div><b>Hạ tầng số tại điểm đến</b><small>Thông tin, QR, vé, thanh toán, kết nối và dữ liệu vận hành tại nơi khách sử dụng dịch vụ.</small></div>
+      <div class="flow-step"><div class="icon">🗂️</div><b>Dữ liệu dùng chung & bản đồ số</b><small>Chuẩn hóa, nguồn chính thức, giảm trùng lặp, tăng khả năng tái sử dụng.</small></div>
+      <div class="flow-step"><div class="icon">📊</div><b>Phân tích & điều hành</b><small>Giám sát, dự báo, cảnh báo và hỗ trợ quyết định trên nền dữ liệu đã kiểm soát chất lượng.</small></div>
+      <div class="flow-step"><div class="icon">🏛️</div><b>Số hóa & diễn giải di sản</b><small>Bảo tồn thông tin, tăng chất lượng diễn giải, tạo tài sản số có thể tái sử dụng.</small></div>
+      <div class="flow-step"><div class="icon">🏪</div><b>Kết nối doanh nghiệp & hộ kinh doanh</b><small>Dữ liệu nhà cung cấp, phân phối, giao dịch và khả năng tham gia của cơ sở nhỏ.</small></div>
+      <div class="flow-step"><div class="icon">📱</div><b>Dịch vụ số xuyên suốt hành trình</b><small>Tìm hiểu, lập kế hoạch, đặt dịch vụ, di chuyển, trải nghiệm, thanh toán, phản ánh.</small></div>
+      <div class="flow-step"><div class="icon">🧪</div><b>Năng lực sử dụng, thử nghiệm & đổi mới</b><small>Đào tạo, đồng sáng tạo, thử nghiệm và đưa kết quả vào vận hành thực tế.</small></div>
+    </div>
+    <div class="card reveal" style="margin-top:22px">
+      <h3>Tại sao phải triển khai đồng bộ?</h3>
+      <p>Hạ tầng tại điểm đến chỉ tạo giá trị cấp tỉnh khi dữ liệu được chuẩn hóa và đưa vào phân tích; dữ liệu chỉ có giá trị khi được dùng cho điều hành và dịch vụ; nội dung số chỉ có tác dụng khi đến được đúng kênh du khách sử dụng; doanh nghiệp chỉ hưởng lợi khi có thể tham gia thực tế vào tìm kiếm, đặt dịch vụ và giao dịch; toàn bộ hệ thống chỉ bền vững khi có năng lực sử dụng và cải tiến sau triển khai.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="kicker">06 — Đối chiếu vấn đề ↔ năng lực</div>
+      <h2>Mỗi nhóm nhiệm vụ đều gắn với một điểm nghẽn đã được xác định</h2>
+    </div>
+    <div class="mapping reveal">
+      <table>
+        <thead><tr><th>Điểm nghẽn</th><th>Bằng chứng chính</th><th>Nhóm năng lực của Đề án</th></tr></thead>
+        <tbody>
+          <tr><td>Giá trị chuyến đi, thời gian lưu trú, mức sử dụng dịch vụ</td><td>Mục tiêu 2030 yêu cầu tổng thu tăng nhanh hơn lượt khách; khách qua đêm có mức chi/ngày cao hơn trong kỳ quan sát 30/4–1/5/2024.</td><td>Dịch vụ số hành trình, dữ liệu doanh nghiệp/điểm đến, đặt chỗ – thanh toán, nội dung trải nghiệm.</td></tr>
+          <tr><td>Mùa vụ và tập trung dòng khách</td><td>Du lịch biển chiếm 68,7% lượt khách năm 2025; Q2–Q3 khoảng 77,9% lượt khách; Sầm Sơn áp đảo trong cùng kỳ cao điểm.</td><td>Hạ tầng điểm đến, phân tích dòng khách, bản đồ số, gợi ý hành trình và phân bổ khách.</td></tr>
+          <tr><td>Tài nguyên lớn nhưng liên kết thị trường chưa tương xứng</td><td>858 di tích được xếp hạng; gần 700 sản phẩm OCOP nhưng việc trưng bày/giới thiệu tại điểm du lịch còn hạn chế.</td><td>Số hóa di sản, nội dung trải nghiệm, kết nối sản phẩm địa phương với kênh phục vụ du khách.</td></tr>
+          <tr><td>Nguồn cung phân tán, năng lực số không đồng đều</td><td>Khoảng 1.450 cơ sở lưu trú; phần lớn là cơ sở quy mô nhỏ; rào cản chi phí, nhân sự và kỹ năng số vẫn tồn tại.</td><td>Quản lý nhà cung cấp, kết nối dữ liệu, giao dịch và hỗ trợ tham gia số.</td></tr>
+          <tr><td>Dữ liệu & nền tảng cần tiếp tục liên thông</td><td>Chỉ thị 10/CT-UBND yêu cầu làm sạch, chuẩn hóa và kết nối dữ liệu văn hóa – du lịch với IOC.</td><td>Dữ liệu dùng chung, bản đồ số, phân tích điều hành, tích hợp các kênh du lịch.</td></tr>
+          <tr><td>Chất lượng dịch vụ & trải nghiệm chưa đồng đều</td><td>Chỉ thị 07/CT-UBND nêu hạn chế về quản lý, dịch vụ, giới thiệu tại di tích và chuyển đổi số; khảo sát nông nghiệp 2026 ghi nhận một số nhóm trải nghiệm có mức hài lòng thấp.</td><td>Giám sát dịch vụ, kênh phản ánh, nội dung số tại điểm đến, đào tạo & năng lực sử dụng hệ thống.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section class="band">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="kicker" style="color:#79e8f7">07 — Bằng chứng & benchmark</div>
+      <h2>Kinh nghiệm bên ngoài củng cố cơ chế, không được dùng như mức dự báo cho Thanh Hóa</h2>
+    </div>
+    <div class="grid grid-2">
+      <div class="card benchmark reveal" style="color:var(--ink)"><span class="tag">Ma Cao</span><h3>Dự báo dòng khách gắn với vận hành</h3><p>Cơ quan Du lịch Chính phủ Ma Cao triển khai dự báo mật độ tại 20 điểm theo các mốc 4 giờ, 24 giờ và 7 ngày, đồng thời liên kết với hoạt động kiểm soát đám đông.</p><p class="small">Ý nghĩa: dữ liệu chỉ tạo giá trị khi gắn với quy trình phản ứng và phân bổ nguồn lực.</p></div>
+      <div class="card benchmark reveal" style="color:var(--ink)"><span class="tag">Chile</span><h3>MapaTurismo xử lý dữ liệu phân tán</h3><p>Chile chuẩn hóa địa lý, tự động kiểm soát chất lượng và tích hợp dữ liệu chính thức vào MapaTurismo sau khi xác định dữ liệu du lịch phân tán, tổng hợp cao và thiếu tính kịp thời.</p><p class="small">Ý nghĩa: chuẩn hóa và dữ liệu dùng chung là điều kiện để phân tích và hoạch định.</p></div>
+      <div class="card benchmark reveal" style="color:var(--ink)"><span class="tag">Hàn Quốc</span><h3>Kết quả kinh tế không đồng đều</h3><p>Nghiên cứu chênh lệch-trong-chênh lệch ghi nhận tác động dương tới số đêm lưu trú và lượng tìm kiếm trực tuyến ở một số địa phương; nghiên cứu tại Jung-gu không tìm thấy tác động có ý nghĩa tới chi tiêu du lịch.</p><p class="small">Ý nghĩa: tác động phụ thuộc bối cảnh và thực thi; không có một tỷ lệ lợi ích phổ quát.</p></div>
+      <div class="card benchmark reveal" style="color:var(--ink)"><span class="tag">Uffizi / châu Âu</span><h3>Hạ tầng tại điểm đến phải gắn với bài toán sử dụng</h3><p>Uffizi dùng dữ liệu số người hiện diện và thời gian tham quan để điều tiết lượt vào theo chu kỳ 15 phút; các sáng kiến dữ liệu du lịch châu Âu nhấn mạnh khả năng tương tác, tiêu chuẩn mở và quản trị dữ liệu.</p><p class="small">Ý nghĩa: “có thiết bị” không phải outcome; giá trị đến từ use case và khả năng tích hợp.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="benefits">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="kicker">08 — Lợi ích khi thực hiện</div>
+      <h2>Giá trị phải được nhìn theo nhiều nhóm thụ hưởng</h2>
+    </div>
+    <div class="grid grid-4">
+      <div class="card benefit reveal"><div class="who">Cơ quan quản lý</div><h3>Dữ liệu thống nhất, quyết định nhanh hơn</h3><p>Giảm nhập lại và đối soát thủ công; có thêm khả năng theo dõi dòng khách, chất lượng dịch vụ và biến động nhu cầu trên cùng nền dữ liệu.</p></div>
+      <div class="card benefit reveal"><div class="who">Điểm đến</div><h3>Quản lý công suất & phân bổ dòng khách</h3><p>Hỗ trợ điều tiết khách, mở rộng hành trình đến các điểm phụ, nâng chất lượng thông tin và diễn giải tại chỗ.</p></div>
+      <div class="card benefit reveal"><div class="who">Doanh nghiệp & hộ kinh doanh</div><h3>Tiếp cận thị trường và giao dịch thuận lợi hơn</h3><p>Thông tin đáng tin cậy, khả năng xuất hiện trên các kênh du khách sử dụng, kết nối dịch vụ và giảm một phần gánh nặng báo cáo lặp lại.</p></div>
+      <div class="card benefit reveal"><div class="who">Du khách</div><h3>Hành trình liền mạch hơn</h3><p>Thông tin, kế hoạch, bản đồ, trải nghiệm, giao dịch và phản ánh được kết nối thay vì phân tán ở nhiều kênh rời rạc.</p></div>
+    </div>
+
+    <div class="section-head reveal" style="margin-top:64px">
+      <div class="kicker">Kịch bản lợi ích nội bộ của hồ sơ Đề án</div>
+      <h2>Đây là kịch bản/giả định — không phải kết quả đã phát sinh</h2>
+      <p class="muted">Các số dưới đây là đầu vào nội bộ đã được xác thực theo tài liệu Đề án; bằng chứng bên ngoài chỉ dùng để củng cố tính hợp lý của cơ chế tác động và điều kiện thực hiện.</p>
+    </div>
+    <div class="grid grid-3">
+      <div class="card scenario reveal"><div class="number">+3–5%</div><b>Chi tiêu bình quân/lượt khách</b><p class="small">Giả định trong kịch bản nội bộ.</p></div>
+      <div class="card scenario reveal"><div class="number">+0,2 ngày</div><b>Thời gian lưu trú</b><p class="small">Giả định trong kịch bản nội bộ.</p></div>
+      <div class="card scenario reveal"><div class="number">1.800–3.000 tỷ</div><b>Doanh thu du lịch tăng thêm/năm</b><p class="small">Ước tính của hồ sơ Đề án.</p></div>
+      <div class="card scenario reveal"><div class="number">90–210 tỷ</div><b>Thu ngân sách tăng thêm/năm</b><p class="small">Ước tính của hồ sơ Đề án.</p></div>
+      <div class="card scenario reveal"><div class="number">15–25 tỷ</div><b>Tiết kiệm quản lý & xúc tiến/năm</b><p class="small">Ước tính của hồ sơ Đề án.</p></div>
+      <div class="card scenario reveal"><div class="number">B/C &gt; 2</div><b>Hoàn vốn kinh tế khoảng 4–5 năm</b><p class="small">Không cộng cơ học các lớp giá trị nếu chưa rà soát phương pháp để tránh trùng lặp.</p></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="kicker">09 — Nếu không thực hiện / tiếp tục phân tán</div>
+      <h2>Chi phí cơ hội xuất hiện qua cơ chế phân mảnh</h2>
+    </div>
+    <div class="coi reveal">
+      <div class="coi-step"><b>Dữ liệu & hệ thống phân tán</b><small>Nhiều nguồn, chuẩn khác nhau, cập nhật không đồng bộ.</small></div>
+      <div class="coi-step"><b>Đối soát & tổng hợp thủ công</b><small>Lặp nhập liệu, kiểm tra, hợp nhất và xử lý sai lệch.</small></div>
+      <div class="coi-step"><b>Thông tin chậm & thiếu tin cậy</b><small>Khó có bức tranh nhất quán về dòng khách và dịch vụ.</small></div>
+      <div class="coi-step"><b>Phối hợp & phản ứng chậm</b><small>Giảm khả năng điều hành theo tình huống và theo dữ liệu.</small></div>
+      <div class="coi-step"><b>Mất cơ hội tạo giá trị</b><small>Khó phân bổ khách, kết nối doanh nghiệp nhỏ, tăng giao dịch và tái sử dụng dữ liệu.</small></div>
+    </div>
+    <p class="small" style="margin-top:16px">Hiện chưa có cơ sở địa phương đủ mạnh để quy đổi toàn bộ “chi phí không hành động” thành một số tiền cụ thể. Vì vậy phần này được trình bày theo chuỗi cơ chế, không gán giá trị VND khi thiếu baseline.</p>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="closing reveal">
+      <div class="kicker" style="color:#79e8f7">Kết luận</div>
+      <h2>Thời điểm 2026–2030 là cửa sổ phù hợp để kết nối các năng lực trước khi hệ thống tiếp tục phát triển theo các hướng tách rời</h2>
+      <p>Thanh Hóa đã có quy mô du lịch lớn, mục tiêu 2030 đòi hỏi tăng mạnh giá trị trên mỗi lượt khách, trong khi vẫn còn các điểm nghẽn về mùa vụ, phân bố dòng khách, liên kết tài nguyên – thị trường, mức độ sẵn sàng số của doanh nghiệp, chất lượng dịch vụ và khả năng liên thông dữ liệu. Tỉnh đồng thời đã có IOC, kiến trúc Chính quyền số, cổng/app du lịch, dữ liệu chuyên ngành và nhiều tài sản số khác. Vì vậy, tính cần thiết của Đề án nằm ở việc kết nối các tài sản hiện có với các năng lực chuyên ngành du lịch còn phải hoàn thiện, để hình thành một hệ thống quản lý – dữ liệu – doanh nghiệp – du khách thống nhất hơn.</p>
+    </div>
+  </div>
+</section>
+
+<section id="references" class="refs">
+  <div class="container">
+    <div class="section-head">
+      <div class="kicker">10 — Tài liệu tham khảo & ghi chú nguồn</div>
+      <h2>Nguồn chính sử dụng trong bản trực quan</h2>
+      <p class="muted">Danh mục dưới đây rút từ bản “FINAL SUBMISSION VERSION”. Các trích dẫn học thuật và chính sách giữ logic Harvard author–date.</p>
+    </div>
+    <details open>
+      <summary>Nguồn Thanh Hóa và nguồn chính thức Việt Nam</summary>
+      <ol>
+        <li>Cục Du lịch Quốc gia Việt Nam (2025a), “Du lịch Thanh Hóa tăng tốc, hướng tới ngành kinh tế mũi nhọn”.</li>
+        <li>Đảng bộ tỉnh Thanh Hóa (2025), Báo cáo chính trị của Ban Chấp hành Đảng bộ tỉnh Thanh Hóa khóa XIX trình Đại hội XX.</li>
+        <li>UBND tỉnh Thanh Hóa (2025a), Chỉ thị số 07/CT-UBND ngày 02/7/2025 về tiếp tục chấn chỉnh công tác quản lý nhà nước về du lịch.</li>
+        <li>UBND tỉnh Thanh Hóa (2025b), Quyết định số 2621/QĐ-UBND ngày 31/7/2025 ban hành Khung Kiến trúc Chính quyền số tỉnh Thanh Hóa, phiên bản 4.0.</li>
+        <li>UBND tỉnh Thanh Hóa (2026), Chỉ thị số 10/CT-UBND ngày 12/7/2026 về phát triển, kết nối, chia sẻ và khai thác dữ liệu phục vụ IOC Thanh Hóa.</li>
+        <li>Sở Văn hóa, Thể thao và Du lịch Thanh Hóa (2026), Phương án và lộ trình triển khai Bài toán lớn “Xây dựng, phát triển hệ sinh thái du lịch thông minh tỉnh Thanh Hóa, giai đoạn 2026–2030” [tài liệu nội bộ đã được xác thực].</li>
+        <li>Bộ Văn hóa, Thể thao và Du lịch (2025b), “Thanh Hóa: Đề án tổng thể ứng dụng công nghệ thông tin trong lĩnh vực du lịch đã mang lại nhiều kết quả tích cực”.</li>
+        <li>Bộ Văn hóa, Thể thao và Du lịch (2025c), “Thanh Hóa: phát huy giá trị di sản văn hóa gắn với phát triển du lịch”.</li>
+        <li>Bộ Khoa học và Công nghệ (2026), “Thanh Hóa chính thức vận hành Trung tâm giám sát, điều hành thông minh”.</li>
+        <li>Báo Thanh Hóa (2025a, 2025b, 2025c; 2026a, 2026b), các bài về chuyển đổi số doanh nghiệp, 9 tháng du lịch, Pù Luông, OCOP và liên kết Sầm Sơn – miền di sản.</li>
+        <li>Báo Nhân Dân (2025, 2026), các bài về lưu lượng khách theo điểm đến và vai trò du lịch biển tại Thanh Hóa.</li>
+      </ol>
+    </details>
+    <details>
+      <summary>Nghiên cứu & benchmark quốc tế tiêu biểu</summary>
+      <ol>
+        <li>Attanasio, A. et al. (2022), “Visitors flow management at Uffizi Gallery in Florence, Italy”, <i>Information Technology & Tourism</i>, 24(3), 409–434.</li>
+        <li>Fan, X., Jiang, X. and Deng, N. (2022), “Immersive technology: A meta-analysis of augmented/virtual reality applications and their impact on tourism experience”, <i>Tourism Management</i>, 91, 104534.</li>
+        <li>Tang, Y. and Zhou, Q. (2025), “Inspired by intertemporal connections: Using AR technology to enhance visitor satisfaction in historical museums”, <i>Tourism Management</i>, 108, 105096.</li>
+        <li>Mao, Z. et al. (2024), “Investigating the effects of digital platform participation on B&B performance”, <i>International Journal of Hospitality Management</i>, 121, 103806.</li>
+        <li>Liu, J. et al. (2025), “Antecedents and consequences of value co-creation in tourist behaviours: empirical evidence from smart tourism application”, <i>Current Issues in Tourism</i>.</li>
+        <li>Um, T., Koo, C. and Chung, N. (2026), “Evaluating the effects of smart tourism cities policy on tourism demand”, <i>Journal of Destination Marketing & Management</i>, 40, 101081.</li>
+        <li>Choi, Y.Y., Kang, D.W. and Choi, C. (2025), “Smart Tourism City Development and Its Effects on Local Tourism and Employment: A Case Study of Jung-gu, Incheon”, <i>Korean Journal of Labor Economics</i>, 48(3), 1–42.</li>
+        <li>European Commission (2023), <i>Towards a Common European Tourism Data Space</i>.</li>
+        <li>OECD (2026a), <i>OECD Tourism Trends and Policies 2026</i> — MapaTurismo Chile.</li>
+        <li>European Health and Digital Executive Agency (2026), DEPLOYTOUR / European tourism data spaces.</li>
+        <li>Macao Government Tourism Office (2019), “Three projects come into service to push forward smart tourism”.</li>
+        <li>Mutch, A. (1996), “The English Tourist Network Automation project: a case study in interorganizational system failure”, <i>Tourism Management</i>, 17(8), 603–609.</li>
+      </ol>
+    </details>
+    <details>
+      <summary>Ảnh minh họa</summary>
+      <div class="license">
+        <p><b>Sầm Sơn:</b> Kevin Walsh, “Sam Son beach.jpg”, Wikimedia Commons, CC BY 2.0.</p>
+        <p><b>Pù Luông:</b> Milomaskirovka, “Pu Luong Thanh Hoa.jpg”, Wikimedia Commons, CC0 1.0.</p>
+        <p><b>Lam Kinh:</b> Bùi Lê Việt Cường, “Lam Kinh.jpg”, Wikimedia Commons, CC BY-SA 4.0.</p>
+        <p><b>Thành Nhà Hồ:</b> Loi Nguyen Duc, “Ho dynasty's citadel, Vietnam.jpg”, Wikimedia Commons, CC BY 2.0.</p>
+        <p>Ảnh chỉ dùng để minh họa không gian du lịch; không được dùng làm bằng chứng định lượng.</p>
+      </div>
+    </details>
+    <div class="license" style="margin-top:18px">
+      <b>Ghi chú phương pháp:</b> Các chỉ tiêu suy ra như tăng trưởng 2025–2030, tỷ trọng Q2–Q3 và tỷ lệ chênh lệch theo điểm đến được giữ đúng giới hạn như trong bản luận chứng cuối. Kịch bản +3–5% chi tiêu, +0,2 ngày lưu trú và các ước tính lợi ích là đầu vào/kịch bản của hồ sơ Đề án, không phải kết quả đã xảy ra.
+    </div>
+  </div>
+</section>
+
+<button class="scrolltop" aria-label="Lên đầu trang">↑</button>
+<script>
+const observer=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('show')})
+},{threshold:.08});
+document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+const btn=document.querySelector('.scrolltop');
+window.addEventListener('scroll',()=>{btn.style.display=window.scrollY>900?'block':'none'});
+btn.addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));
+</script>
+</body>
+</html>

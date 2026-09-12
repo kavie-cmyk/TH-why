@@ -19,7 +19,7 @@ jobs:
         run: |
           python - <<'PY'
           from pathlib import Path
-          import html, unicodedata
+          import html, unicodedata, re
 
           p = Path('index.html')
           raw = p.read_text(encoding='utf-8-sig')
@@ -31,21 +31,29 @@ jobs:
           def replace_once(old, new, label):
               global raw
               oe, ne = enc(old), enc(new)
-              n_encoded = raw.count(oe)
-              n_literal = raw.count(old)
-              n = n_encoded + n_literal
+              n = raw.count(oe) + raw.count(old)
               if n != 1:
                   raise SystemExit(f'{label}: expected 1 match, found {n}')
               raw = raw.replace(oe, ne).replace(old, new)
               print(label, n)
 
-          def replace_all(old, new, label):
+          def flexible_pattern(s):
+              parts = []
+              for ch in unicodedata.normalize('NFC', s):
+                  if ord(ch) < 128:
+                      parts.append(re.escape(ch))
+                  else:
+                      hx = format(ord(ch), 'X')
+                      dec = str(ord(ch))
+                      parts.append('(?:' + re.escape(ch) + r'|&#x' + hx + r';|&#x' + hx.lower() + r';|&#' + dec + r';)')
+              return ''.join(parts)
+
+          def replace_flexible_all(old, new, label):
               global raw
-              oe, ne = enc(old), enc(new)
-              n = raw.count(oe) + raw.count(old)
+              pattern = re.compile(flexible_pattern(old))
+              raw, n = pattern.subn(enc(new), raw)
               if n < 1:
                   raise SystemExit(f'{label}: expected >=1 match, found {n}')
-              raw = raw.replace(oe, ne).replace(old, new)
               print(label, n)
 
           replace_once(
@@ -53,7 +61,7 @@ jobs:
               'Vì vậy, cấu trúc đầu tư được tổ chức để vừa đáp ứng nhu cầu riêng của từng nhóm chủ thể, vừa hình thành một hệ thống năng lực liên thông, hạn chế phát triển các hạng mục thành những hệ thống độc lập.',
               'architecture lead')
 
-          replace_all(
+          replace_flexible_all(
               'Các kết quả này được sử dụng làm căn cứ về cơ chế tạo giá trị; không đồng nghĩa với tỷ lệ dự báo trực tiếp cho Thanh Hóa.',
               'Các kết quả đối chứng giúp làm rõ cơ chế tạo giá trị và điều kiện thành công; kịch bản của Thanh Hóa được xây dựng trên quy mô thị trường, mục tiêu đến năm 2030 và điều kiện vận hành của tỉnh.',
               'benchmark framing')

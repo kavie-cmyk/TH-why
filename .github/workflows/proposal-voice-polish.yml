@@ -31,19 +31,21 @@ jobs:
           def replace_once(old, new, label):
               global raw
               oe, ne = enc(old), enc(new)
-              n = raw.count(oe)
+              n_encoded = raw.count(oe)
+              n_literal = raw.count(old)
+              n = n_encoded + n_literal
               if n != 1:
                   raise SystemExit(f'{label}: expected 1 match, found {n}')
-              raw = raw.replace(oe, ne)
+              raw = raw.replace(oe, ne).replace(old, new)
               print(label, n)
 
           def replace_all(old, new, label):
               global raw
               oe, ne = enc(old), enc(new)
-              n = raw.count(oe)
+              n = raw.count(oe) + raw.count(old)
               if n < 1:
                   raise SystemExit(f'{label}: expected >=1 match, found {n}')
-              raw = raw.replace(oe, ne)
+              raw = raw.replace(oe, ne).replace(old, new)
               print(label, n)
 
           replace_once(

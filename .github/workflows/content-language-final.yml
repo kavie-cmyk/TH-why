@@ -70,7 +70,6 @@ jobs:
               'khoảng cách giữa mục tiêu tăng lượt khách và mục tiêu tăng tổng thu đặt ra yêu cầu đồng thời nâng giá trị chuyến đi, mở rộng không gian hưởng lợi, cải thiện chất lượng trải nghiệm và tăng năng lực quản lý dựa trên dữ liệu.',
               '2030 proposal framing')
 
-          # Scenario cards were still written like an appraisal memo.
           repl('Xác định chính thức ở bước thẩm định kinh tế – tài chính',
                'Kịch bản hiệu quả tổng hợp; cập nhật khi hoàn thiện phương án đầu tư',
                'scenario card proposal voice', min_count=2)
@@ -84,6 +83,14 @@ jobs:
               'Dữ liệu có nhưng không được chuyển thành quy trình điều hành thì tỉnh vẫn phải xử lý theo mô hình hậu kiểm và phối hợp thủ công;',
               'Dữ liệu có nhưng không được chuyển thành quy trình điều hành thì hoạt động quản lý vẫn phụ thuộc nhiều vào hậu kiểm và phối hợp thủ công;',
               'risk narrative proposal voice')
+
+          # Remaining residues found by the previous QA pass.
+          if enc('B/C và hoàn vốn phải được xác định lại khi có đầy đủ chi phí, tiến độ và dòng lợi ích.') in raw:
+              repl('B/C và hoàn vốn phải được xác định lại khi có đầy đủ chi phí, tiến độ và dòng lợi ích.',
+                   'B/C và hoàn vốn được cập nhật khi hoàn thiện phương án đầu tư với đầy đủ chi phí, tiến độ và dòng lợi ích.',
+                   'remaining BC reviewer residue')
+          raw = raw.replace(enc('tỉnh cần'), enc('cần'))
+          raw = raw.replace(enc('Tỉnh cần'), enc('Yêu cầu đặt ra là'))
 
           dec = html.unescape(raw)
 

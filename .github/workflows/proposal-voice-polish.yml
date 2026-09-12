@@ -35,37 +35,41 @@ jobs:
               if n != 1:
                   raise SystemExit(f'{label}: expected 1 match, found {n}')
               raw = raw.replace(oe, ne)
-              print(label)
+              print(label, n)
+
+          def replace_all(old, new, label):
+              global raw
+              oe, ne = enc(old), enc(new)
+              n = raw.count(oe)
+              if n < 1:
+                  raise SystemExit(f'{label}: expected >=1 match, found {n}')
+              raw = raw.replace(oe, ne)
+              print(label, n)
 
           replace_once(
               'Vì vậy, cấu trúc đầu tư cần vừa đáp ứng nhu cầu riêng của từng nhóm chủ thể, vừa hình thành một hệ thống năng lực liên thông, tránh phát triển các hạng mục như những hệ thống độc lập.',
               'Vì vậy, cấu trúc đầu tư được tổ chức để vừa đáp ứng nhu cầu riêng của từng nhóm chủ thể, vừa hình thành một hệ thống năng lực liên thông, hạn chế phát triển các hạng mục thành những hệ thống độc lập.',
-              'architecture lead'
-          )
+              'architecture lead')
 
-          replace_once(
+          replace_all(
               'Các kết quả này được sử dụng làm căn cứ về cơ chế tạo giá trị; không đồng nghĩa với tỷ lệ dự báo trực tiếp cho Thanh Hóa.',
               'Các kết quả đối chứng giúp làm rõ cơ chế tạo giá trị và điều kiện thành công; kịch bản của Thanh Hóa được xây dựng trên quy mô thị trường, mục tiêu đến năm 2030 và điều kiện vận hành của tỉnh.',
-              'benchmark framing'
-          )
+              'benchmark framing')
 
           replace_once(
               'Mỗi cảnh báo, phản ánh và luồng dữ liệu phải gắn với nghiệp vụ, ngưỡng và trách nhiệm xử lý cụ thể.',
               'Giá trị của cảnh báo, phản ánh và luồng dữ liệu hình thành khi chúng được gắn với nghiệp vụ, ngưỡng và trách nhiệm xử lý cụ thể.',
-              'condition card voice'
-          )
+              'condition card voice')
 
           replace_once(
               'Hạ tầng tại điểm đến phải tạo được dữ liệu và dịch vụ thực tế; dữ liệu phải được chuẩn hóa để IOC, ứng dụng và hệ thống quản lý doanh nghiệp cùng sử dụng; nội dung số phải đi vào hành trình của du khách; phản ánh phải quay trở lại quy trình kiểm tra, chấn chỉnh và cải thiện chất lượng.',
               'Hiệu quả của toàn hệ thống hình thành khi hạ tầng tại điểm đến tạo được dữ liệu và dịch vụ thực tế; dữ liệu được chuẩn hóa để IOC, ứng dụng và hệ thống quản lý doanh nghiệp cùng sử dụng; nội dung số đi vào hành trình của du khách; phản ánh quay trở lại quy trình kiểm tra, chấn chỉnh và cải thiện chất lượng.',
-              'operating condition paragraph'
-          )
+              'operating condition paragraph')
 
           replace_once(
               'Thứ nhất, dữ liệu phải có đầu mối cập nhật, chuẩn dùng chung và khả năng tái sử dụng giữa các hệ thống; nếu không, IOC, ứng dụng và các công cụ AI sẽ chỉ phản ánh các nguồn thông tin rời rạc. Thứ hai, mỗi luồng dữ liệu và phản ánh phải gắn với một quy trình nghiệp vụ và trách nhiệm xử lý cụ thể; cảnh báo về quá tải, chất lượng dịch vụ hay phản ánh của du khách chỉ có giá trị khi dẫn tới hành động. Thứ ba, doanh nghiệp và các kênh thị trường phải được tích hợp thay vì bị thay thế: khu vực công tập trung vào dữ liệu chính thức, chuẩn dùng chung, hạ tầng và năng lực điều phối cấp tỉnh; doanh nghiệp tiếp tục thực hiện chức năng cạnh tranh, bán hàng, thanh toán, quản trị khách hàng và quảng bá.',
               'Thứ nhất, dữ liệu có đầu mối cập nhật, chuẩn dùng chung và khả năng tái sử dụng giữa các hệ thống để IOC, ứng dụng và các công cụ AI cùng khai thác một nguồn thông tin tin cậy. Thứ hai, mỗi luồng dữ liệu và phản ánh được gắn với quy trình nghiệp vụ và trách nhiệm xử lý cụ thể để cảnh báo về quá tải, chất lượng dịch vụ hay phản ánh của du khách dẫn tới hành động. Thứ ba, doanh nghiệp và các kênh thị trường được tích hợp vào hệ sinh thái thay vì bị thay thế: khu vực công tập trung vào dữ liệu chính thức, chuẩn dùng chung, hạ tầng và năng lực điều phối cấp tỉnh; doanh nghiệp tiếp tục thực hiện chức năng cạnh tranh, bán hàng, thanh toán, quản trị khách hàng và quảng bá.',
-              'three operating conditions'
-          )
+              'three operating conditions')
 
           dec = html.unescape(raw)
           forbidden = [

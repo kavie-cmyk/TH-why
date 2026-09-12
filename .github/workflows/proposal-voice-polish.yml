@@ -37,34 +37,32 @@ jobs:
               raw = raw.replace(oe, ne).replace(old, new)
               print(label, n)
 
-          def flexible_pattern(s):
-              parts = []
+          def flex_pattern(s):
+              out=[]
               for ch in unicodedata.normalize('NFC', s):
-                  if ord(ch) < 128:
-                      parts.append(re.escape(ch))
+                  if ord(ch)<128:
+                      out.append(re.escape(ch))
                   else:
-                      hx = format(ord(ch), 'X')
-                      dec = str(ord(ch))
-                      parts.append('(?:' + re.escape(ch) + r'|&#x' + hx + r';|&#x' + hx.lower() + r';|&#' + dec + r';)')
-              return ''.join(parts)
+                      hx=format(ord(ch),'X'); dec=str(ord(ch))
+                      out.append('(?:'+re.escape(ch)+r'|&#x'+hx+r';|&#x'+hx.lower()+r';|&#'+dec+r';)')
+              return ''.join(out)
 
-          def replace_flexible_all(old, new, label):
+          def replace_flex_all(old,new,label):
               global raw
-              pattern = re.compile(flexible_pattern(old))
-              raw, n = pattern.subn(enc(new), raw)
-              if n < 1:
+              raw,n=re.subn(flex_pattern(old),enc(new),raw)
+              if n<1:
                   raise SystemExit(f'{label}: expected >=1 match, found {n}')
-              print(label, n)
+              print(label,n)
 
           replace_once(
               'Vì vậy, cấu trúc đầu tư cần vừa đáp ứng nhu cầu riêng của từng nhóm chủ thể, vừa hình thành một hệ thống năng lực liên thông, tránh phát triển các hạng mục như những hệ thống độc lập.',
               'Vì vậy, cấu trúc đầu tư được tổ chức để vừa đáp ứng nhu cầu riêng của từng nhóm chủ thể, vừa hình thành một hệ thống năng lực liên thông, hạn chế phát triển các hạng mục thành những hệ thống độc lập.',
               'architecture lead')
 
-          replace_flexible_all(
-              'Các kết quả này được sử dụng làm căn cứ về cơ chế tạo giá trị; không đồng nghĩa với tỷ lệ dự báo trực tiếp cho Thanh Hóa.',
-              'Các kết quả đối chứng giúp làm rõ cơ chế tạo giá trị và điều kiện thành công; kịch bản của Thanh Hóa được xây dựng trên quy mô thị trường, mục tiêu đến năm 2030 và điều kiện vận hành của tỉnh.',
-              'benchmark framing')
+          replace_flex_all(
+              'không đồng nghĩa với tỷ lệ dự báo trực tiếp cho Thanh Hóa',
+              'kịch bản của Thanh Hóa được xác định riêng trên cơ sở dữ liệu, mục tiêu và điều kiện vận hành của tỉnh',
+              'benchmark disclaimer')
 
           replace_once(
               'Mỗi cảnh báo, phản ánh và luồng dữ liệu phải gắn với nghiệp vụ, ngưỡng và trách nhiệm xử lý cụ thể.',
@@ -81,8 +79,8 @@ jobs:
               'Thứ nhất, dữ liệu có đầu mối cập nhật, chuẩn dùng chung và khả năng tái sử dụng giữa các hệ thống để IOC, ứng dụng và các công cụ AI cùng khai thác một nguồn thông tin tin cậy. Thứ hai, mỗi luồng dữ liệu và phản ánh được gắn với quy trình nghiệp vụ và trách nhiệm xử lý cụ thể để cảnh báo về quá tải, chất lượng dịch vụ hay phản ánh của du khách dẫn tới hành động. Thứ ba, doanh nghiệp và các kênh thị trường được tích hợp vào hệ sinh thái thay vì bị thay thế: khu vực công tập trung vào dữ liệu chính thức, chuẩn dùng chung, hạ tầng và năng lực điều phối cấp tỉnh; doanh nghiệp tiếp tục thực hiện chức năng cạnh tranh, bán hàng, thanh toán, quản trị khách hàng và quảng bá.',
               'three operating conditions')
 
-          dec = html.unescape(raw)
-          forbidden = [
+          dec=html.unescape(raw)
+          forbidden=[
               'cấu trúc đầu tư cần vừa',
               'không đồng nghĩa với tỷ lệ dự báo trực tiếp cho Thanh Hóa',
               'Mỗi cảnh báo, phản ánh và luồng dữ liệu phải gắn',
@@ -90,26 +88,26 @@ jobs:
               'Thứ nhất, dữ liệu phải có đầu mối',
               'Thứ hai, mỗi luồng dữ liệu và phản ánh phải gắn',
               'Thứ ba, doanh nghiệp và các kênh thị trường phải được tích hợp',
-              'Thanh Hóa phải', 'tỉnh phải', 'tỉnh cần',
-              'phải được xác định lại', 'thuộc bước thẩm định',
-              'chưa được thẩm định độc lập', 'không được cộng trực tiếp', 'không được suy rộng'
+              'Thanh Hóa phải','tỉnh phải','tỉnh cần',
+              'phải được xác định lại','thuộc bước thẩm định','chưa được thẩm định độc lập',
+              'không được cộng trực tiếp','không được suy rộng'
           ]
-          bad = [x for x in forbidden if x in dec]
+          bad=[x for x in forbidden if x in dec]
           if bad:
-              raise SystemExit('proposal voice QA residuals: ' + repr(bad))
+              raise SystemExit('proposal voice QA residuals: '+repr(bad))
 
-          required = [
+          required=[
               'cấu trúc đầu tư được tổ chức để vừa đáp ứng nhu cầu riêng của từng nhóm chủ thể',
-              'kịch bản của Thanh Hóa được xây dựng trên quy mô thị trường, mục tiêu đến năm 2030 và điều kiện vận hành của tỉnh',
+              'kịch bản của Thanh Hóa được xác định riêng trên cơ sở dữ liệu, mục tiêu và điều kiện vận hành của tỉnh',
               '100% dữ liệu tài nguyên du lịch',
               '1.200–1.500 doanh nghiệp, cơ sở lưu trú và hộ kinh doanh tham gia hệ sinh thái số',
               'Bảy hạng mục có quan hệ bổ trợ hai chiều, không phụ thuộc vào một trình tự vận hành cứng.'
           ]
           for x in required:
               if x not in dec:
-                  raise SystemExit('missing required proposal content: ' + x)
+                  raise SystemExit('missing required proposal content: '+x)
 
-          p.write_text(raw, encoding='utf-8')
+          p.write_text(raw,encoding='utf-8')
           print('PROPOSAL_AUTHOR_LANGUAGE_PASS')
           PY
 

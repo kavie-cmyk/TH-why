@@ -1,0 +1,192 @@
+name: One-shot content source sync
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/content-source-sync.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  sync-content:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Align live rationale content with approved Google Doc and 5692 scope
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re, html, unicodedata
+
+          p = Path('index.html')
+          raw = p.read_text(encoding='utf-8-sig')
+
+          def enc(s):
+              s = unicodedata.normalize('NFC', s)
+              return ''.join(ch if ord(ch) < 128 else f'&#x{ord(ch):X};' for ch in s)
+
+          def replace_once_u(doc, old, new, label):
+              old_e, new_e = enc(old), enc(new)
+              n = doc.count(old_e)
+              if n != 1:
+                  raise SystemExit(f'{label}: expected exactly 1 match, found {n}')
+              return doc.replace(old_e, new_e)
+
+          # 1) Remove an unsupported inference from the two stay/spending sources.
+          raw = replace_once_u(
+              raw,
+              'Hai nguồn có phạm vi khác nhau và không đại diện cho toàn bộ thị trường hiện tại, nhưng cùng cho thấy thời gian lưu trú, độ sâu trải nghiệm và mức sử dụng dịch vụ là những biến số quan trọng khi tỉnh muốn tăng tổng thu nhanh hơn tốc độ tăng lượt khách.',
+              'Dù chỉ phản ánh các nhóm khách và thời điểm quan sát tương ứng, hai nguồn cùng cho thấy thời gian lưu trú và mức sử dụng dịch vụ là những biến số quan trọng khi tổng thu cần tăng nhanh hơn tốc độ tăng lượt khách.',
+              'stay/spending claim boundary'
+          )
+
+          # 2) Seven items are complementary capabilities, not a rigid value-chain sequence.
+          raw = replace_once_u(
+              raw,
+              'Vì vậy, cấu trúc đầu tư phải vừa giải quyết nhu cầu của từng nhóm chủ thể, vừa bảo đảm các hạng mục tạo thành một chuỗi giá trị thống nhất.',
+              'Vì vậy, cấu trúc đầu tư được tổ chức theo các hạng mục có phạm vi và chức năng khác nhau nhưng bổ trợ lẫn nhau, cùng sử dụng dữ liệu và dịch vụ dùng chung ở quy mô toàn tỉnh.',
+              'non-sequential architecture lead'
+          )
+
+          # 3) Locked pillar terminology.
+          raw = raw.replace(enc('Quản lý – điều hành thông minh'), enc('Quản lý, điều hành thông minh'))
+
+          # 4) Attribute the participation/satisfaction targets to the whole ecosystem and keep output boundaries explicit.
+          start = enc('Các mục tiêu đầu ra được xác định ở quy mô toàn tỉnh, bao phủ từ năng lực điều hành, dữ liệu chuyên ngành đến trải nghiệm số, doanh nghiệp và người dùng.')
+          end = enc('Hạng mục 1.')
+          pat = re.compile(r'<p>' + re.escape(start) + r'.*?' + re.escape(end) + r'</p>', re.S)
+          matches = list(pat.finditer(raw))
+          if len(matches) != 1:
+              raise SystemExit(f'output target paragraph: expected 1 match, found {len(matches)}')
+          target_text = ('Các mục tiêu đầu ra được xác định ở quy mô toàn tỉnh, bao phủ từ năng lực điều hành, dữ liệu chuyên ngành đến trải nghiệm số, doanh nghiệp và người dùng. '
+              'Phân hệ Trung tâm điều hành du lịch thông minh tích hợp IOC tỉnh và hệ thống trí tuệ nhân tạo hướng tới vận hành 24/7 và kết nối tối thiểu 10 khu, điểm du lịch trọng điểm; '
+              'Cơ sở dữ liệu chuyên ngành du lịch và bản đồ số ngành du lịch hướng tới số hóa 100% khu, điểm du lịch được công nhận và 1.200–1.500 cơ sở kinh doanh dịch vụ du lịch; '
+              'tối thiểu 20 sản phẩm trải nghiệm số di sản, sinh thái, văn hóa được phát triển và liên kết với hệ sinh thái. '
+              'Ứng dụng Thanh Hóa Smart Tourism và kênh phản ánh của du khách hướng tới 1,0–1,5 triệu người dùng vào năm 2028 và 2,5–3,0 triệu người dùng vào năm 2030; '
+              'ở quy mô toàn hệ sinh thái, mục tiêu là trên 90% cơ sở kinh doanh dịch vụ du lịch tham gia nền tảng và mức hài lòng của du khách đạt trên 90%. '
+              'Đây là các mục tiêu đầu ra và mức bao phủ dự kiến trong giai đoạn 2026–2030. '
+              'Chỉ tiêu kết nối tối thiểu 10 khu, điểm của Phân hệ Trung tâm điều hành du lịch thông minh tích hợp IOC tỉnh và hệ thống trí tuệ nhân tạo là chỉ tiêu kết nối dữ liệu và giám sát với IOC, không đồng nhất với số khu, điểm được đầu tư mới toàn bộ hạ tầng tại chỗ trong Hạ tầng số và kết nối tại các khu, điểm du lịch.')
+          raw = pat.sub('<p>' + enc(target_text) + '</p>', raw, count=1)
+
+          # 5) Remove the visual arrow-chain and present the seven items as a neutral capability set in numeric order.
+          raw = raw.replace('.node:after{content:"";position:absolute;right:-8px;top:50%;width:8px;height:2px;background:var(--teal)}', '.node:after{display:none}')
+          net_pat = re.compile(r'<div class="network">.*?</div><div class="backbone-strip">', re.S)
+          nets = list(net_pat.finditer(raw))
+          if len(nets) != 1:
+              raise SystemExit(f'network block: expected 1 match, found {len(nets)}')
+          net = '''<div class="network">
+<div class="node"><div class="n">HM1</div><div class="t">Hạ tầng tại điểm đến</div></div>
+<div class="node"><div class="n">HM2</div><div class="t">Điều hành & AI</div></div>
+<div class="node"><div class="n">HM3</div><div class="t">Dữ liệu & bản đồ số</div></div>
+<div class="node"><div class="n">HM4</div><div class="t">Nội dung & trải nghiệm</div></div>
+<div class="node"><div class="n">HM5</div><div class="t">Nhà cung cấp & chất lượng</div></div>
+<div class="node"><div class="n">HM6</div><div class="t">Hành trình du khách</div></div>
+<div class="node"><div class="n">HM7</div><div class="t">Công viên & nhân lực</div></div>
+</div><div class="backbone-strip">'''
+          raw = net_pat.sub(enc(net), raw, count=1)
+
+          # 6) Use the full locked name where HM2 capability crosses into the app.
+          raw = raw.replace(
+              enc('bằng năng lực AI của Phân hệ Trung tâm điều hành,'),
+              enc('bằng năng lực AI của Phân hệ Trung tâm điều hành du lịch thông minh tích hợp IOC tỉnh và hệ thống trí tuệ nhân tạo,')
+          )
+          raw = raw.replace(
+              enc('thuộc năng lực AI của Phân hệ Trung tâm điều hành nhưng được triển khai trên ứng dụng;'),
+              enc('thuộc năng lực AI của Phân hệ Trung tâm điều hành du lịch thông minh tích hợp IOC tỉnh và hệ thống trí tuệ nhân tạo nhưng được triển khai trên ứng dụng;')
+          )
+
+          # 7) Replace the old one-way operating description with the approved two-way relationship statement.
+          rel_start = enc('Về quan hệ vận hành, bảy hạng mục tạo thành một mạng liên kết:')
+          rel_end = enc('duy trì năng lực vận hành.</p>')
+          rel_pat = re.compile(r'<p>' + re.escape(rel_start) + r'.*?' + re.escape(rel_end), re.S)
+          rels = list(rel_pat.finditer(raw))
+          if len(rels) != 1:
+              raise SystemExit(f'item relationship paragraph: expected 1 match, found {len(rels)}')
+          rel_text = ('Bảy hạng mục có quan hệ bổ trợ hai chiều, không phụ thuộc vào một trình tự vận hành cứng. '
+              'Hạ tầng tại điểm đến cung cấp dịch vụ tại chỗ và phát sinh dữ liệu; Cơ sở dữ liệu chuyên ngành du lịch và bản đồ số ngành du lịch chuẩn hóa thông tin từ nhiều nguồn; '
+              'Phân hệ Trung tâm điều hành du lịch thông minh tích hợp IOC tỉnh và hệ thống trí tuệ nhân tạo khai thác dữ liệu để giám sát, dự báo và hỗ trợ quyết định. '
+              'Đồng thời, nội dung số, thông tin nhà cung cấp và các dịch vụ được đưa tới du khách qua Ứng dụng Thanh Hóa Smart Tourism; phản ánh và dữ liệu sử dụng quay trở lại phục vụ quản lý, giám sát chất lượng và cải thiện sản phẩm. '
+              'Công viên du lịch số tạo thêm không gian khai thác tài sản số thành sản phẩm điểm đến, còn phát triển nhân lực số hỗ trợ khả năng vận hành và cập nhật toàn hệ sinh thái.')
+          raw = rel_pat.sub('<p>' + enc(rel_text) + '</p>', raw, count=1)
+
+          # 8) Remove sequential dependency wording at HM2, HM4 and HM7 while preserving scope.
+          raw = replace_once_u(
+              raw,
+              'Khi hạ tầng tại điểm đến bắt đầu tạo ra dữ liệu về dòng khách, thiết bị, an ninh, môi trường và phản ánh, tỉnh cần một năng lực chuyên ngành để chuyển các tín hiệu đó thành thông tin phục vụ điều hành. Thanh Hóa đã có IOC cấp tỉnh; vì vậy, việc đầu tư tập trung vào hình thành phân hệ chuyên ngành du lịch tích hợp với IOC hiện có, không xây dựng một trung tâm độc lập mới.',
+              'Dữ liệu về dòng khách, thiết bị, an ninh, môi trường và phản ánh chỉ tạo giá trị quản lý khi được tổng hợp, phân tích và gắn với quy trình điều hành. Thanh Hóa đã có IOC cấp tỉnh; vì vậy, việc đầu tư tập trung vào hình thành phân hệ chuyên ngành du lịch tích hợp với IOC hiện có, không xây dựng một trung tâm độc lập mới.',
+              'HM2 opening'
+          )
+          raw = replace_once_u(
+              raw,
+              'Trên nền hạ tầng và dữ liệu dùng chung, yêu cầu tiếp theo là chuyển nguồn tài nguyên lớn của Thanh Hóa thành nội dung và trải nghiệm có khả năng kéo dài hành trình, mở rộng nhu cầu ngoài các điểm du lịch biển và tạo thêm lý do để du khách sử dụng dịch vụ.',
+              'Để nguồn tài nguyên lớn của Thanh Hóa tạo thêm giá trị du lịch, hoạt động số hóa cần đồng thời hình thành nội dung và trải nghiệm có khả năng kéo dài hành trình, mở rộng nhu cầu ngoài các điểm du lịch biển và tạo thêm lý do để du khách sử dụng dịch vụ.',
+              'HM4 opening'
+          )
+          raw = replace_once_u(
+              raw,
+              'Khi tài sản số đã được hình thành và được phân phối qua điểm đến, ứng dụng và các kênh truyền thông, bước tiếp theo là tạo không gian khai thác nội dung thành sản phẩm điểm đến mới và đồng thời bảo đảm có đội ngũ đủ năng lực duy trì hệ sinh thái. Hạng mục 7 vì vậy gồm hai cấu phần bổ trợ cho nhau.',
+              'Để tài sản số của tỉnh vừa được khai thác thành sản phẩm điểm đến mới, vừa được duy trì và làm mới trong dài hạn, hạng mục này gồm hai cấu phần bổ trợ cho nhau.',
+              'HM7 opening'
+          )
+
+          # 9) Replace chain/missing-link wording in the operating conditions section.
+          raw = replace_once_u(
+              raw,
+              'Nếu một mắt xích không hoạt động, giá trị của các mắt xích còn lại giảm theo.',
+              'Khi một cấu phần vận hành tách rời, giá trị của các cấu phần liên quan cũng giảm.',
+              'operating condition relationship'
+          )
+
+          # -------- Content QA gate --------
+          dec = html.unescape(raw)
+          banned_content = [
+              'độ sâu trải nghiệm', 'chuỗi giá trị thống nhất', 'bước tiếp theo',
+              'Nếu một mắt xích không hoạt động', 'Phân hệ Trung tâm điều hành nhưng được triển khai'
+          ]
+          for x in banned_content:
+              if x in dec:
+                  raise SystemExit(f'content QA failed: residual phrase {x!r}')
+
+          exact_items = [
+              'Hạ tầng số và kết nối tại các khu, điểm du lịch',
+              'Phân hệ Trung tâm điều hành du lịch thông minh tích hợp IOC tỉnh và hệ thống trí tuệ nhân tạo',
+              'Cơ sở dữ liệu chuyên ngành du lịch và bản đồ số ngành du lịch',
+              'Số hóa và trải nghiệm số di sản, sinh thái, văn hóa',
+              'Quản lý doanh nghiệp, hộ kinh doanh và giám sát dịch vụ',
+              'Ứng dụng Thanh Hóa Smart Tourism và kênh phản ánh của du khách',
+              'Công viên du lịch số Thanh Hóa và phát triển nhân lực số',
+          ]
+          for x in exact_items:
+              if x not in dec:
+                  raise SystemExit(f'content QA failed: missing locked item name {x}')
+          for x in ['Quản lý, điều hành thông minh','Điểm đến thông minh','Doanh nghiệp thông minh','Du khách thông minh',
+                    'Kho dữ liệu du lịch dùng chung','Ứng dụng Thanh Hóa Smart Tourism']:
+              if x not in dec:
+                  raise SystemExit(f'content QA failed: missing locked ecosystem term {x}')
+
+          required = [
+              'Bảy hạng mục có quan hệ bổ trợ hai chiều, không phụ thuộc vào một trình tự vận hành cứng.',
+              'ở quy mô toàn hệ sinh thái, mục tiêu là trên 90% cơ sở kinh doanh dịch vụ du lịch tham gia nền tảng và mức hài lòng của du khách đạt trên 90%.',
+              'thông qua hạ tầng của tổ chức trung gian thanh toán được cấp phép',
+              'không phải lợi nhuận của dự án hoặc dòng tiền hoàn vốn'
+          ]
+          for x in required:
+              if x not in dec:
+                  raise SystemExit(f'content QA failed: required boundary missing: {x}')
+
+          p.write_text(raw, encoding='utf-8')
+          print('CONTENT_QA_PASS')
+          PY
+
+      - name: Commit source-aligned content and remove one-shot workflow
+        shell: bash
+        run: |
+          git config user.name "ChatGPT Content QA"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          rm -f .github/workflows/content-source-sync.yml
+          git add index.html .github/workflows/content-source-sync.yml
+          git commit -m "Align TH-why content with approved rationale and 5692 scope"
+          git push

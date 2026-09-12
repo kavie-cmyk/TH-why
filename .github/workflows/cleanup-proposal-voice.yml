@@ -1,0 +1,169 @@
+name: One-shot proposal voice cleanup
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/cleanup-proposal-voice.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Clean proposal voice in both HTML files
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          from html.parser import HTMLParser
+          import html, re, unicodedata
+
+          def apply_once(text, old, new, label):
+              n = text.count(old)
+              if n != 1:
+                  raise SystemExit(f'{label}: expected 1 occurrence, found {n}: {old[:100]}')
+              return text.replace(old, new)
+
+          # ---------- index.html ----------
+          p = Path('index.html')
+          raw = p.read_text(encoding='utf-8-sig')
+          doc = unicodedata.normalize('NFC', html.unescape(raw))
+
+          replacements = [
+              ('Giai đoạn 2026–2030 · Tài liệu phục vụ trình cơ quan có thẩm quyền', 'Giai đoạn 2026–2030'),
+              ('<div class="hero-meta">Ngày cập nhật: 11/09/2026</div>', ''),
+              ('Sáu nhóm vấn đề thực tiễn dưới đây chính là các khoảng cách cần được thu hẹp để chuyển mục tiêu tăng trưởng đến năm 2030 thành kết quả thực tế.', 'Để đạt mục tiêu tăng trưởng đến năm 2030, sáu nhóm vấn đề thực tiễn này cần được xử lý đồng thời và có tính liên thông.'),
+              ('Đối chiếu yêu cầu tăng giá trị đến năm 2030 với hiện trạng phát triển cho thấy sáu nhóm vấn đề đang trực tiếp hạn chế khả năng khai thác đầy đủ quy mô thị trường, tài nguyên và nguồn cung du lịch của Thanh Hóa. Các vấn đề này không tồn tại tách biệt: thời gian lưu trú ngắn và chi tiêu còn hạn chế có quan hệ với sự tập trung dòng khách, mức độ đa dạng của sản phẩm, khả năng kết nối doanh nghiệp – dịch vụ, chất lượng trải nghiệm và năng lực điều hành dựa trên dữ liệu. Do đó, việc xử lý từng vấn đề riêng lẻ khó tạo ra thay đổi đủ lớn; cần nhìn chúng như các mắt xích của cùng một chuỗi giá trị du lịch.', 'Để đạt yêu cầu tăng trưởng đến năm 2030, Thanh Hóa cần xử lý sáu nhóm vấn đề đang hạn chế khả năng khai thác đầy đủ quy mô thị trường, tài nguyên và nguồn cung du lịch. Các vấn đề này có quan hệ chặt chẽ với nhau: thời gian lưu trú, mức chi tiêu, phân bố dòng khách, độ đa dạng của sản phẩm, khả năng kết nối doanh nghiệp – dịch vụ, chất lượng trải nghiệm và năng lực điều hành dựa trên dữ liệu cùng tác động tới giá trị tạo ra từ mỗi chuyến đi.'),
+              ('<div class="note"><strong>Kết luận của phần II:</strong> sáu vấn đề có quan hệ với nhau. Nếu tiếp tục xử lý bằng các ứng dụng, thiết bị hoặc cơ sở dữ liệu riêng lẻ, sự phân mảnh khó được khắc phục; yêu cầu cốt lõi là hình thành một hệ sinh thái trong đó hạ tầng, dữ liệu, điều hành, doanh nghiệp, nội dung số và hành trình du khách hỗ trợ lẫn nhau.</div>', '<div class="note">Sáu vấn đề có quan hệ với nhau. Nếu tiếp tục xử lý bằng các ứng dụng, thiết bị hoặc cơ sở dữ liệu riêng lẻ, sự phân mảnh khó được khắc phục; cần hình thành một hệ sinh thái trong đó hạ tầng, dữ liệu, điều hành, doanh nghiệp, nội dung số và hành trình du khách hỗ trợ lẫn nhau.</div>'),
+              ('Bốn trụ cột gồm quản lý – điều hành thông minh, điểm đến thông minh, doanh nghiệp thông minh và du khách thông minh là cách tổ chức các đối tượng và chức năng của hệ sinh thái; bảy hạng mục đầu tư là các cấu phần triển khai cụ thể để hiện thực hóa các trụ cột đó.', 'Hệ sinh thái được hình thành trên bốn trụ cột: quản lý – điều hành thông minh, điểm đến thông minh, doanh nghiệp thông minh và du khách thông minh; bảy hạng mục đầu tư cung cấp các năng lực cụ thể để hình thành và vận hành bốn trụ cột này.'),
+              ('Bảng trên cho thấy bảy hạng mục không tương ứng một-một với sáu vấn đề thực tiễn; mỗi hạng mục xử lý một mắt xích và đồng thời tạo dữ liệu, dịch vụ hoặc năng lực cho các hạng mục khác.', 'Bảy hạng mục đầu tư có phạm vi và chức năng khác nhau nhưng được thiết kế để bổ trợ lẫn nhau, cùng xử lý các vấn đề thực tiễn của du lịch Thanh Hóa và hình thành năng lực dùng chung cho toàn hệ sinh thái.'),
+              ('Quy mô đầu ra cho thấy đây là một hệ thống cấp tỉnh, không phải tập hợp các thử nghiệm rời rạc.', 'Các mục tiêu đầu ra được xác định ở quy mô toàn tỉnh, bao phủ từ năng lực điều hành, dữ liệu chuyên ngành đến trải nghiệm số, doanh nghiệp và người dùng.'),
+              ('Các chỉ tiêu trên là mục tiêu đầu ra và mức bao phủ dự kiến của giai đoạn 2026–2030.', 'Đây là các mục tiêu đầu ra và mức bao phủ dự kiến trong giai đoạn 2026–2030.'),
+              (' Trên cơ sở đó, vai trò của từng hạng mục trong mạng liên kết được xác định cụ thể.', ''),
+              ('Sau khi xác định vai trò của từng hạng mục, vấn đề quyết định hiệu quả đầu tư là khả năng các hạng mục vận hành như một hệ thống thống nhất.', 'Hiệu quả đầu tư phụ thuộc trực tiếp vào khả năng bảy hạng mục vận hành như một hệ thống thống nhất.'),
+              ('<strong>Ranh giới sử dụng kịch bản:</strong> các con số lợi ích là kịch bản phục vụ lập hồ sơ, không phải kết quả đã được thẩm định độc lập. B/C, hoàn vốn và NPV phải được xác định lại ở bước thẩm định kinh tế – tài chính khi có đầy đủ chi phí, tiến độ, chi phí vận hành và dòng lợi ích.', '<strong>Phạm vi của kịch bản lợi ích:</strong> các con số lợi ích là kịch bản dự kiến, không phải kết quả đã được thẩm định độc lập. B/C, hoàn vốn và NPV phải được xác định lại ở bước thẩm định kinh tế – tài chính khi có đầy đủ chi phí, tiến độ, chi phí vận hành và dòng lợi ích.'),
+              ('Nguồn: Nhóm xây dựng Đề án tổng hợp các giả định và kịch bản tính toán phục vụ lập hồ sơ.', 'Nguồn: Tổng hợp và tính toán của nhóm xây dựng Đề án.'),
+          ]
+          for i,(old,new) in enumerate(replacements,1):
+              doc = apply_once(doc, old, new, f'index replacement {i}')
+
+          class Encoder(HTMLParser):
+              def __init__(self):
+                  super().__init__(convert_charrefs=False); self.out=[]; self.raw_depth=0
+              @staticmethod
+              def enc(s):
+                  s=unicodedata.normalize('NFC',s)
+                  return ''.join(ch if ord(ch)<128 else f'&#x{ord(ch):X};' for ch in s)
+              def handle_starttag(self,tag,attrs):
+                  self.out.append(self.get_starttag_text())
+                  if tag.lower() in ('style','script'): self.raw_depth += 1
+              def handle_startendtag(self,tag,attrs): self.out.append(self.get_starttag_text())
+              def handle_endtag(self,tag):
+                  self.out.append(f'</{tag}>')
+                  if tag.lower() in ('style','script') and self.raw_depth: self.raw_depth -= 1
+              def handle_data(self,data): self.out.append(data if self.raw_depth else self.enc(data))
+              def handle_entityref(self,name): self.out.append(f'&{name};')
+              def handle_charref(self,name): self.out.append(f'&#{name};')
+              def handle_comment(self,data): self.out.append(f'<!--{data}-->')
+              def handle_decl(self,decl): self.out.append(f'<!{decl}>')
+          enc=Encoder(); enc.feed(doc)
+          p.write_text(''.join(enc.out), encoding='utf-8')
+
+          # ---------- legacy visual page ----------
+          p2 = Path('thanh-hoa-smart-tourism-v1.html')
+          v = unicodedata.normalize('NFC', p2.read_text(encoding='utf-8-sig'))
+          v_repls = [
+              ('Luận chứng trực quan • Giai đoạn 2026–2030', 'Luận chứng sự cần thiết thực hiện Đề án · Giai đoạn 2026–2030'),
+              ('Vì sao Thanh Hóa cần thực hiện Đề án hệ sinh thái du lịch thông minh?', 'Sự cần thiết thực hiện Đề án hệ sinh thái du lịch thông minh tỉnh Thanh Hóa'),
+              ('03 — Sáu điểm nghẽn cần giải quyết', '03 — Sáu vấn đề thực tiễn'),
+              ('Đề án có cơ sở từ các vấn đề cụ thể của du lịch Thanh Hóa', 'Sáu vấn đề thực tiễn cần được xử lý đồng bộ'),
+              ('05 — Bảy nhóm năng lực cần thiết', '05 — Bảy hạng mục đầu tư'),
+              ('Không phải bảy gói công nghệ rời rạc, mà là một chuỗi phụ thuộc lẫn nhau', 'Bảy hạng mục được tổ chức để bổ trợ lẫn nhau trong một hệ sinh thái dùng chung'),
+              ('Tại sao phải triển khai đồng bộ?', 'Yêu cầu triển khai đồng bộ'),
+              ('06 — Đối chiếu vấn đề ↔ năng lực', '06 — Mối liên hệ giữa vấn đề thực tiễn và năng lực đầu tư'),
+              ('Mỗi nhóm nhiệm vụ đều gắn với một điểm nghẽn đã được xác định', 'Các năng lực đầu tư cùng xử lý sáu vấn đề thực tiễn của du lịch Thanh Hóa'),
+              ('Kịch bản lợi ích nội bộ của hồ sơ Đề án', 'Kịch bản lợi ích dự kiến'),
+              ('Đây là kịch bản/giả định — không phải kết quả đã phát sinh', 'Các chỉ tiêu lợi ích là kịch bản dự kiến và phải được thẩm định ở bước tiếp theo'),
+              ('Các số dưới đây là đầu vào nội bộ đã được xác thực theo tài liệu Đề án; bằng chứng bên ngoài chỉ dùng để củng cố tính hợp lý của cơ chế tác động và điều kiện thực hiện.', 'Các kịch bản được sử dụng để lượng hóa khả năng tạo lợi ích khi các cơ chế của Đề án vận hành hiệu quả. B/C, hoàn vốn và NPV phải được xác định lại khi có đầy đủ tổng mức đầu tư, tiến độ, chi phí vận hành và dòng lợi ích.'),
+              ('Giả định trong kịch bản nội bộ.', 'Kịch bản tăng chi tiêu bình quân/lượt khách.'),
+          ]
+          for i,(old,new) in enumerate(v_repls,1):
+              # Some legacy headings may have minor punctuation/whitespace differences; only require core meta phrases.
+              if old in v:
+                  v=v.replace(old,new)
+
+          # Context-specific scenario captions.
+          v=v.replace('<div class="card scenario reveal"><div class="number">+0,2 ngày</div><b>Thời gian lưu trú</b><p class="small">Kịch bản tăng chi tiêu bình quân/lượt khách.</p></div>', '<div class="card scenario reveal"><div class="number">+0,2 ngày</div><b>Thời gian lưu trú</b><p class="small">Kịch bản kéo dài thời gian lưu trú.</p></div>')
+          v=v.replace('<p class="small">Ước tính của hồ sơ Đề án.</p>', '<p class="small">Kịch bản dự kiến.</p>')
+          v=v.replace('09 — Nếu không thực hiện / tiếp tục phân tán', '09 — Chi phí cơ hội nếu tiếp tục đầu tư phân tán')
+          v=v.replace('Chi phí cơ hội xuất hiện qua cơ chế phân mảnh', 'Đầu tư phân tán làm tăng chi phí phối hợp và tiếp tục bỏ lỡ giá trị')
+          v=v.replace('Hiện chưa có cơ sở địa phương đủ mạnh để quy đổi toàn bộ “chi phí không hành động” thành một số tiền cụ thể. Vì vậy phần này được trình bày theo chuỗi cơ chế, không gán giá trị VND khi thiếu baseline.', 'Chi phí cơ hội chưa được quy đổi thành một giá trị tiền tệ tổng hợp; trọng tâm là các tổn thất có thể phát sinh từ dữ liệu phân mảnh, phối hợp chậm, khó phân bổ dòng khách, hạn chế khả năng tham gia của doanh nghiệp nhỏ và giảm khả năng tái sử dụng tài sản số.')
+          v=v.replace('Thời điểm 2026–2030 là cửa sổ phù hợp để chuyển từ các cấu phần rời rạc sang một hệ sinh thái', 'Việc đầu tư thực hiện Đề án trong giai đoạn 2026–2030 là cần thiết')
+          v=v.replace('Vì vậy, tính cần thiết của Đề án nằm ở việc kết nối các tài sản số hiện có với các năng lực chuyên ngành du lịch còn phải hoàn thiện, qua đó nâng giá trị chuyến đi, cải thiện phân bổ dòng khách, mở rộng khả năng tham gia của doanh nghiệp và nâng chất lượng quản lý dựa trên dữ liệu.', 'Vì vậy, cần đầu tư hình thành năng lực dùng chung ở cấp tỉnh, kết nối các tài sản số hiện có với các năng lực chuyên ngành du lịch còn phải hoàn thiện, qua đó nâng giá trị chuyến đi, cải thiện phân bổ dòng khách, mở rộng khả năng tham gia của doanh nghiệp và nâng chất lượng quản lý dựa trên dữ liệu.')
+          v=v.replace('10 — Tài liệu tham khảo & ghi chú nguồn', '10 — Tài liệu tham khảo')
+          v=v.replace('Nguồn chính sử dụng trong bản trực quan', 'Nguồn và tài liệu tham khảo')
+          v=re.sub(r'<p class="muted">Danh mục dưới đây rút từ bản “FINAL SUBMISSION VERSION”\. Các trích dẫn học thuật và chính sách giữ logic Harvard author–date\.</p>\s*','',v)
+          v=v.replace(' [tài liệu nội bộ đã được xác thực]', '')
+          v=v.replace('Ảnh chỉ dùng để minh họa không gian du lịch; không được dùng làm bằng chứng định lượng.', 'Ảnh sử dụng cho mục đích minh họa không gian du lịch.')
+          v=v.replace('<b>Ghi chú phương pháp:</b> Các chỉ tiêu suy ra như tăng trưởng 2025–2030, tỷ trọng Q2–Q3 và tỷ lệ chênh lệch theo điểm đến được giữ đúng giới hạn như trong bản luận chứng cuối. Kịch bản +3–5% chi tiêu, +0,2 ngày lưu trú và các ước tính lợi ích là đầu vào/kịch bản của hồ sơ Đề án, không phải kết quả đã xảy ra.', '<b>Phạm vi sử dụng số liệu:</b> Các chỉ tiêu suy ra như tăng trưởng 2025–2030, tỷ trọng Q2–Q3 và chênh lệch theo điểm đến chỉ được sử dụng trong đúng phạm vi tính toán nêu kèm. Kịch bản +3–5% chi tiêu, +0,2 ngày lưu trú và các ước tính lợi ích là kịch bản dự kiến, không phải kết quả đã phát sinh.')
+          p2.write_text(v, encoding='utf-8')
+
+          # ---------- QA ----------
+          checks = {
+              'index.html': html.unescape(Path('index.html').read_text(encoding='utf-8')),
+              'thanh-hoa-smart-tourism-v1.html': Path('thanh-hoa-smart-tourism-v1.html').read_text(encoding='utf-8'),
+          }
+          banned = [
+              'Tài liệu phục vụ trình cơ quan có thẩm quyền','Ngày cập nhật: 11/09/2026',
+              'Sáu nhóm vấn đề thực tiễn dưới đây','Bảng trên cho thấy','Quy mô đầu ra cho thấy',
+              'Các chỉ tiêu trên là mục tiêu đầu ra','Trên cơ sở đó, vai trò','Sau khi xác định vai trò',
+              'phục vụ lập hồ sơ','Kết luận của phần II','FINAL SUBMISSION VERSION','bản trực quan',
+              'Kịch bản lợi ích nội bộ của hồ sơ Đề án','đầu vào nội bộ đã được xác thực',
+              'Giả định trong kịch bản nội bộ','Ước tính của hồ sơ Đề án','Ghi chú phương pháp:',
+              'Không phải bảy gói công nghệ rời rạc, mà là một chuỗi phụ thuộc lẫn nhau',
+          ]
+          failed=[]
+          for name,text in checks.items():
+              low=text.lower()
+              for phrase in banned:
+                  if phrase.lower() in low:
+                      failed.append((name,phrase))
+          if failed:
+              raise SystemExit('QA failed: '+repr(failed))
+
+          # Exact official HM names must remain present in index.html.
+          official=[
+              'Hạ tầng số và kết nối tại các khu, điểm du lịch',
+              'Phân hệ Trung tâm điều hành du lịch thông minh tích hợp IOC tỉnh và hệ thống trí tuệ nhân tạo',
+              'Cơ sở dữ liệu chuyên ngành du lịch và bản đồ số ngành du lịch',
+              'Số hóa và trải nghiệm số di sản, sinh thái, văn hóa',
+              'Quản lý doanh nghiệp, hộ kinh doanh và giám sát dịch vụ',
+              'Ứng dụng Thanh Hóa Smart Tourism và kênh phản ánh của du khách',
+              'Công viên du lịch số Thanh Hóa và phát triển nhân lực số',
+          ]
+          idx=checks['index.html']
+          missing=[x for x in official if x not in idx]
+          if missing:
+              raise SystemExit('Missing official HM titles: '+repr(missing))
+
+          # Remove the one-shot workflow from the resulting commit.
+          Path('.github/workflows/cleanup-proposal-voice.yml').unlink()
+          print('Proposal-voice cleanup QA: PASS')
+          PY
+
+      - name: Commit cleanup
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+            exit 0
+          fi
+          git commit -m "Cleanup TH-why proposal voice"
+          git push
